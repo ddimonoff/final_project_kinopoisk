@@ -16,6 +16,7 @@ from UIPage import UIPage as uip
 base_url = "https://www.kinopoisk.ru"
 login = ""
 password = ""
+phone = ""
 
 @pytest.fixture(scope="session")
 def driver():
@@ -25,6 +26,21 @@ def driver():
     uip(browser).open()
     yield browser
     browser.quit()
+
+
+@pytest.fixture(params=["chrome", "firefox", "edge"])
+def cross(request):
+    browser_name = request.param
+
+    if browser_name == "chrome":
+        driver = webdriver.Chrome()
+    elif browser_name == "firefox":
+        driver = webdriver.Firefox()
+    elif browser_name == "edge":
+        driver = webdriver.Edge()
+
+    yield driver  # передаем драйвер в тест
+    driver.quit()  # закрываем после теста
 
 
 @allure.feature("Сайт Кинопоиск - библиотека фильмов и сериалов")
@@ -43,4 +59,27 @@ def test_1_ui(driver):
 @allure.severity("Critical")
 def test_2_ui(driver):
     uip(driver).test_ui_search()
+
+@allure.feature("Сайт Кинопоиск - библиотека фильмов и сериалов")
+@allure.title("Функциональное тестирование")
+@allure.title("Тестирование плеера")
+@allure.severity("Critical")
+def test_3_ui(driver):
+    uip(driver).test_ui_player()
+
+
+@allure.feature("Сайт Кинопоиск - библиотека фильмов и сериалов")
+@allure.title("Функциональное тестирование")
+@allure.title("Кросс-браузерное тестирование")
+@allure.severity("Critical")
+def test_4_ui(cross):
+    uip(cross).open_cross()
+
+
+@allure.feature("Сайт Кинопоиск - библиотека фильмов и сериалов")
+@allure.title("Функциональное тестирование")
+@allure.title("Расширенный поиск фильма")
+@allure.severity("Critical")
+def test_5_ui(driver):
+    uip(driver).test_advanced_movie_search()
 
