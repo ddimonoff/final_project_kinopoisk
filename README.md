@@ -4,7 +4,6 @@
 - pytest
 - selenium
 - requests
-- _sqlalchemy_
 - allure
 - config
 ### Струткура:
@@ -13,3 +12,5 @@
 ### Полезные ссылки
 - [Подсказка по markdown](https://www.markdownguide.org/basic-syntax/)
 - [Генератор файла .gitignore](https://www.toptal.com/developers/gitignore)
+### Запуск тестов
+- запуск тестов и генерация отчета производится при помощи команды "./run.sh" в терминале
